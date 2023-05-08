@@ -1,6 +1,8 @@
 package com.gtn.todoservice.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gtn.todoservice.entity.Todo;
+import com.gtn.todoservice.model.request.UpsertTodoRequest;
 import com.gtn.todoservice.service.TodoService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,10 +39,12 @@ public class TodoControllerTest {
   @Autowired
   private MockMvc mockMvc;
 
+  private ObjectMapper objectMapper;
 
   @BeforeEach
   public void setup() {
     todoTest = Todo.builder().text(TEXT).id(ID).build();
+    objectMapper = new ObjectMapper();
   }
 
   @AfterEach
@@ -71,5 +75,4 @@ public class TodoControllerTest {
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andExpect(MockMvcResultMatchers.jsonPath("$.success", equalTo(false)));
   }
-
 }
